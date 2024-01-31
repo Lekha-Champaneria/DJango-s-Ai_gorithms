@@ -39,7 +39,7 @@ class Call:
         parameters_of_query_string = {
             'q': song_name,
             'type': 'track',
-            'limit': 1 
+            'limit': 10 
         }
         headers = {'Authorization': f'Bearer {access_token}'}
         result = requests.get(search_url, parameters_of_query_string, headers=headers)
@@ -51,9 +51,9 @@ class Call:
             artists = track_details["tracks"]["items"][0]["artists"]
             
             print(f"\n\n{t_id}\n<'{t_name}'> by <'{artists[0]['name']}'>")
-            return t_id
+            return track_details
         else:
-            return None
+            return result.status_code
 
     def get_features(track_id, access_token):
         

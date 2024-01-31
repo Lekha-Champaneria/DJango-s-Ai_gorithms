@@ -75,12 +75,31 @@
                 </div>
                 {% if request.session.api__token %}
                     {% comment %} <p>API Token: {{ request.session.api__token }}</p> {% endcomment %}
-
-
                     <script>
-                        
+                        $(document).ready(function(){
+                            $('#txtsongs').on('input',function(){
+                                //alert("YO");
+                                const s_name = $("#txtsongs").val()
+                                $.ajax({
+                                    url:"find_Track",
+                                    type:"POST",
+                                    dataType:"json",
+                                    data:{
+                                        csrfmiddlewaretoken:"{{csrf_token}}",
+                                        token:"{{request.session.api__token}}",
+                                        q:s_name
+                                    },
+                                    success:function(data){
+                                        console.log(data);
+                                    },
+                                    error:function(xhr, status, error){
+                                        // the following alert is for debugging only remove it asap
+                                        console.log(xhr.responseText);
+                                    }
+                                });
+                            });
+                        });
                     </script>
-                    
                 {% else %}
                 no
                     <script>
