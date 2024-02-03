@@ -67,11 +67,10 @@
                 ">
             </div>
             </h1>
-            <form action="" method="post">
-                {% csrf_token %}
                 <div class="mb-3">
                     <input type="text" name="txtsongs" id="txtsongs" class="form-control"
                         placeholder="Enter a song name" aria-describedby="helpId" />
+                        <select id="songDropdown" class="form-control"></select>
                 </div>
                 {% if request.session.api__token %}
                     {% comment %} <p>API Token: {{ request.session.api__token }}</p> {% endcomment %}
@@ -90,11 +89,26 @@
                                         q:s_name
                                     },
                                     success:function(data){
+                                        console.log("nachoo beeeee");
                                         console.log(data);
+
+                                        $('#songDropdown').empty();
+
+                                        // Populate dropdown with new options
+                                        $.each(data, function(index, item){
+                                            //var x = item['tracks']['items'][index]['name'].value;
+                                            var x = item['tracks'];
+                                            $('#songDropdown').append($('<option>', {
+                                                //x
+                                                value: x, // Replace with the appropriate property of your data
+                                                text: item['items'][index].val() // Replace with the appropriate property of your data
+                                            }));
+                                        });
+                                        
                                     },
                                     error:function(xhr, status, error){
                                         // the following alert is for debugging only remove it asap
-                                        console.log(xhr.responseText);
+                                        console.log(error);
                                     }
                                 });
                             });
@@ -106,7 +120,6 @@
                         window.location.href = "/token_request"
                     </script>
                 {% endif %}
-            </form>
             {% comment %} {{ request.session.api__token }} {% endcomment %}
         </div>
     </main>

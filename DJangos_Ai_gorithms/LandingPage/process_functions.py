@@ -39,7 +39,7 @@ class Call:
         parameters_of_query_string = {
             'q': song_name,
             'type': 'track',
-            'limit': 10 
+            'limit': 10
         }
         headers = {'Authorization': f'Bearer {access_token}'}
         result = requests.get(search_url, parameters_of_query_string, headers=headers)
