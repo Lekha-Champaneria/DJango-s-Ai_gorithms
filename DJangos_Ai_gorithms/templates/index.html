@@ -86,7 +86,7 @@
                         <select id="songDropdown" class="form-control"></select>
                 </div>
                 {% if request.session.api__token %}
-                    <p>API Token: {{ request.session.api__token }}</p>
+                    {% comment %} <p>API Token: {{ request.session.api__token }}</p> {% endcomment %}
                     <script>
                         $(document).ready(function(){
                             $('#txtsongs').on('input',function(){
@@ -112,7 +112,8 @@
                                             // Populate dropdown with new options
                                             $.each(data["tracks"]["items"], function(index, item){
                                                 //var x = item['tracks']['items'][index]['name'].value;
-                                                var CardHtml = '<div \
+                                                var CardHtml = ' \
+                                                <div  id = ' +item["id"] +'\
                                                 class="card text-white bg-danger"> \
                                                 <img class="card-img-top" src="'+item['album']['images'][2]['url']+'" alt="Title" /> \
                                                 <div class="card-body"> \

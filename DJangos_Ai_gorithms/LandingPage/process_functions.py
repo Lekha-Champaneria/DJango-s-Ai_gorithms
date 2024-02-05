@@ -70,3 +70,21 @@ class Call:
             print( audio_features)
         else:
             print("NOOOOOOOO")
+
+    def get_recommendation(limit, seed_track, seed_artist):
+        Recommendation_EndPoint = 'https://api.spotify.com/v1/recommendations/'
+        parameters_of_query_string = {
+            'limit':limit,
+            'seed_artists': seed_artist,  
+            'seed_tracks' : seed_track,
+        }
+        access_token = request.session.api__token
+        headers = {'Authorization': f'Bearer {access_token}'}
+
+        result = requests.get(Recommendation_EndPoint, parameters_of_query_string, headers=headers)
+        
+        if result.status_code == 200:
+            Recommendation_list = result.json()            
+            return Recommendation_list
+        else:
+            return result.status_code

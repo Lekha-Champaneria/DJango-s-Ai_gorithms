@@ -19,6 +19,15 @@ def run_get_song_details(request):
     # return render(request, "index.html")
     return JsonResponse(track)
 
+def run_get_recommendation(request):
+    seed_track = request.GET.get('track_id')
+    seed_artist = request.GET.get('artist_id')
+
+    result_recommendation = Call.get_recommendation(limit=100, seed_track=seed_track, seed_artist=seed_artist )
+
+    return JsonResponse(result_recommendation)
+
+
 def end(request):
     request.session.clear()
     return render(request,"index.html")
