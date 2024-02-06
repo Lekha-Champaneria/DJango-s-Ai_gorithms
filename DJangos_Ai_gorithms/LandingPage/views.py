@@ -20,8 +20,8 @@ def run_get_song_details(request):
     return JsonResponse(track)
 
 def run_get_recommendation(request):
-    seed_track = request.GET.get('track_id')
-    seed_artist = request.GET.get('artist_id')
+    seed_track = request.POST.get('track_id')
+    seed_artist = request.POST.get('artist_id')
 
     result_recommendation = Call.get_recommendation(limit=100, seed_track=seed_track, seed_artist=seed_artist )
 

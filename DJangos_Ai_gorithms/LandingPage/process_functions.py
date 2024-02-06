@@ -84,7 +84,8 @@ class Call:
         result = requests.get(Recommendation_EndPoint, parameters_of_query_string, headers=headers)
         
         if result.status_code == 200:
-            Recommendation_list = result.json()            
+            Recommendation_list = result.json()
+            print("list",Recommendation_list)            
             return Recommendation_list
         else:
             return result.status_code
