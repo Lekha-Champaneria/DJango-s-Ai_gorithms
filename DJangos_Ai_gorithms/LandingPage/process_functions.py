@@ -71,15 +71,14 @@ class Call:
         else:
             print("NOOOOOOOO")
 
-    def get_recommendation(limit, seed_track, seed_artist):
+    def get_recommendation(limit, seed_track, seed_artist, token):
         Recommendation_EndPoint = 'https://api.spotify.com/v1/recommendations/'
         parameters_of_query_string = {
             'limit':limit,
             'seed_artists': seed_artist,  
             'seed_tracks' : seed_track,
         }
-        access_token = request.session.api__token
-        headers = {'Authorization': f'Bearer {access_token}'}
+        headers = {'Authorization': f'Bearer {token}'}
 
         result = requests.get(Recommendation_EndPoint, parameters_of_query_string, headers=headers)
         
