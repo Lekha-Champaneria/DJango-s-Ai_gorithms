@@ -158,7 +158,25 @@
                                     },
                                     success:function(data){
                                         console.log(data['tracks']);
+                                        var recommendations = []
+                                        for (var i = 0; i < data.tracks.length; i++) {
+                                            var track = data.tracks[i];
                                         
+                                            // Extract details for the current track
+                                            var recommendation = {
+                                                track_id : track.id,
+                                                track_name : track.name,
+                                                duration_ms : track.duration_ms,
+                                                artist_name : track.artists[0].name,
+                                                albumb_name : track.album.name,
+                                                preview_url : track.preview_url,
+                                                external_urls : track.external_urls,
+                                                uri : track.uri
+                                            }
+                                            recommendations.push(recommendation)
+                                        }
+                                        console.log(recommendations)
+                                        localStorage.setItem('recommendationsData', recommendations);
                                     },
                                     error:function(xhr,status,error){
                                         console.log(error)
