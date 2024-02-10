@@ -67,7 +67,8 @@ class Call:
         if response.status_code == 200:
             print("YOOOOOO")
             audio_features = response.json()
-            print( audio_features)
+            print(audio_features)
+            return audio_features
         else:
             print("NOOOOOOOO")
 
