@@ -27,6 +27,8 @@ def run_get_recommendation(request):
 
     return JsonResponse(result_recommendation)
 
+def run_get_features(request):
+    result = get_features(request.POST.track_id, request.session['api__token'])
 
 def end(request):
     request.session.clear()

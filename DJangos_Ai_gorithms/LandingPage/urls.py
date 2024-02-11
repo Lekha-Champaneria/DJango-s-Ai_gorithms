@@ -8,5 +8,6 @@ urlpatterns = [
     path('token_request',views.run_get_token),
     path('find_Track',views.run_get_song_details),
     path('recommend',views.run_get_recommendation),
+    path('features',views.run_get_features),
     path('end',views.end)
 ] 

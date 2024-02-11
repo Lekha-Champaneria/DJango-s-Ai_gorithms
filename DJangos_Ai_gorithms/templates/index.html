@@ -159,6 +159,7 @@
                                     success:function(data){
                                         console.log(data['tracks']);
                                         var recommendations = []
+                                        var requests = []
                                         for (var i = 0; i < data.tracks.length; i++) {
                                             var track = data.tracks[i];
                                         
@@ -174,9 +175,34 @@
                                                 uri : track.uri
                                             }
                                             recommendations.push(recommendation)
-                                        }
+                                            requests.push($.ajax({
+                                                url: "features",
+                                                type: "POST", // Assuming it's a GET request
+                                                dataType: "json",
+                                                data: {
+                                                    csrfmiddlewaretoken:"{{csrf_token}}",
+                                                    track_id: track.id
+                                                }
+                                            }));
+                                        } // end for
+                                        /*Promise.all(requests)
+                                            .then(function(responses) {
+                                                // Process the features data for each track
+                                                //for (var i = 0; i < responses.length; i++) {
+                                                for (var i = 0; i < 1; i++) {
+                                                    var featuresData = responses[i];
+                                                    console.log("Features for track " + recommendations[i].track_id + ":", featuresData);
+                                                }
+
+                                                // Store the recommendations data in local storage
+                                                localStorage.setItem('recommendationsData', JSON.stringify(recommendations));
+                                            })
+                                            .catch(function(error) {
+                                                console.error("Error fetching features:", error);
+                                        });*/
                                         console.log(recommendations)
-                                        localStorage.setItem('recommendationsData', recommendations);
+                                        //localStorage.setItem('recommendationsData', recommendations);
+
                                     },
                                     error:function(xhr,status,error){
                                         console.log(error)
