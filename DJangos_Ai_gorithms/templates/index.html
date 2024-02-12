@@ -107,7 +107,7 @@
                                             //alert("are haan bhai haan");
                                             $('#songDropdown').empty();
 
-                                            $('#songDropdown').append($('<option>'));
+                                            $('#songDropdown').append($('<option disabled selected>Please select a song</option>'));
                                             // Populate dropdown with new options
                                             $.each(data["tracks"]["items"], function(index, item){
                                                 //var x = item['tracks']['items'][index]['name'].value;
@@ -115,12 +115,11 @@
                                                 <div  id = ' +item["id"] +'\
                                                 class="card text-white bg-danger"> \
                                                 <img class="card-img-top" src="'+item['album']['images'][2]['url']+'" alt="Title" /> \
-                                                    <form action="recommend" method="POST"> \
                                                         <input type="hidden" value="'+item["id"]+'" name="track_id"> \
                                                         <input type="hidden" value="'+item["artists"][0]["id"]+'" name="artist_id"> \
                                                         <h4 class="card-title">' + item['name'] + ' \
                                                     - '+item['artists'][0]['name']+'</h4> \
-                                                </div> </form>\
+                                                </div>\
                                             </div>';
                                                 $('#songDropdown').append($('<option>', {
                                                     value: item["id"]+"+++"+item["artists"][0]["id"], // Replace with the appropriate property of your data
@@ -160,6 +159,7 @@
                                         console.log(data['tracks']);
                                         var recommendations = []
                                         var requests = []
+                                        var results = []
                                         for (var i = 0; i < data.tracks.length; i++) {
                                             var track = data.tracks[i];
                                         
@@ -169,7 +169,7 @@
                                                 track_name : track.name,
                                                 duration_ms : track.duration_ms,
                                                 artist_name : track.artists[0].name,
-                                                albumb_name : track.album.name,
+                                                album_name : track.album.name,
                                                 preview_url : track.preview_url,
                                                 external_urls : track.external_urls,
                                                 uri : track.uri
@@ -182,27 +182,20 @@
                                                 data: {
                                                     csrfmiddlewaretoken:"{{csrf_token}}",
                                                     track_id: track.id
+                                                },
+                                                success:function(data){
+                                                    //console.log(data)
+                                                    results.push(data)
+                                                },
+                                                error:function(error){
+                                                    console.log(error)
                                                 }
                                             }));
                                         } // end for
-                                        /*Promise.all(requests)
-                                            .then(function(responses) {
-                                                // Process the features data for each track
-                                                //for (var i = 0; i < responses.length; i++) {
-                                                for (var i = 0; i < 1; i++) {
-                                                    var featuresData = responses[i];
-                                                    console.log("Features for track " + recommendations[i].track_id + ":", featuresData);
-                                                }
-
-                                                // Store the recommendations data in local storage
-                                                localStorage.setItem('recommendationsData', JSON.stringify(recommendations));
-                                            })
-                                            .catch(function(error) {
-                                                console.error("Error fetching features:", error);
-                                        });*/
                                         console.log(recommendations)
-                                        //localStorage.setItem('recommendationsData', recommendations);
-
+                                        console.log(results)
+                                        localStorage.setItem('recommendationsData', recommendations);
+                                        localStorage.setItem('featuresData', results);
                                     },
                                     error:function(xhr,status,error){
                                         console.log(error)
@@ -214,7 +207,7 @@
                 {% else %}
                 no
                     <script>
-                        window.location.href = "/token_request"
+                        window.location.href = "/end"
                     </script>
                 {% endif %}
             {% comment %} {{ request.session.api__token }} {% endcomment %}

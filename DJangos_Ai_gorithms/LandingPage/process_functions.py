@@ -56,7 +56,6 @@ class Call:
             return result.status_code
 
     def get_features(track_id, access_token):
-        
         # Preparing the request to send for audio features
         features_url = f'https://api.spotify.com/v1/audio-features/{track_id}'
         headers = {'Authorization': f'Bearer {access_token}'}
@@ -65,7 +64,7 @@ class Call:
         response = requests.get(features_url, headers=headers)
         
         if response.status_code == 200:
-            print("YOOOOOO")
+            print("FEATURES YOOOOOO")
             audio_features = response.json()
             print(audio_features)
             return audio_features
