@@ -142,6 +142,8 @@
                                     }
                                 });
                             });
+                            // The code for 
+
                             $("#songDropdown").on('change',function(){
                                 //alert("yo");
                                 var [track_id , artist_id] = $("#songDropdown").val().split("+++")
@@ -156,12 +158,15 @@
                                         artist_id:artist_id
                                     },
                                     success:function(data){
-                                        console.log(data['tracks']);
+                                        console.log("Tracks data on outer success: "+ data);
                                         var recommendations = []
-                                        var requests = []
+                                        //var requests = []
                                         var results = []
-                                        for (var i = 0; i < data.tracks.length; i++) {
+                                        console.log(data.tracks.length)
+                                        //for (var i = 0; i < data.tracks.length; i++) {
+                                        for(var i = 0; i < data.tracks.length; i++) {
                                             var track = data.tracks[i];
+                                            //console.log("track id : "+track.id)
                                         
                                             // Extract details for the current track
                                             var recommendation = {
@@ -175,25 +180,28 @@
                                                 uri : track.uri
                                             }
                                             recommendations.push(recommendation)
-                                            requests.push($.ajax({
-                                                url: "features",
-                                                type: "POST", // Assuming it's a GET request
-                                                dataType: "json",
-                                                data: {
+                                            //console.log("Recommendation :"+i+" "+recommendation)
+                                            $.ajax({
+                                                url: 'features',
+                                                type: 'POST',
+                                                dataType: 'json',
+                                                data:{
                                                     csrfmiddlewaretoken:"{{csrf_token}}",
-                                                    track_id: track.id
+                                                    track_id:track.id
                                                 },
                                                 success:function(data){
-                                                    //console.log(data)
                                                     results.push(data)
+                                                    console.log(data)
                                                 },
                                                 error:function(error){
                                                     console.log(error)
                                                 }
-                                            }));
-                                        } // end for
-                                        console.log(recommendations)
-                                        console.log(results)
+                                            });
+                                            // for features data retrival
+                                            
+                                        } // end for loop
+                                        console.log("recommendation: "+recommendations[0])
+                                        console.log("Features results : "+results)
                                         localStorage.setItem('recommendationsData', recommendations);
                                         localStorage.setItem('featuresData', results);
                                     },
@@ -207,7 +215,7 @@
                 {% else %}
                 no
                     <script>
-                        window.location.href = "/end"
+                        window.location.href = "token_request"
                     </script>
                 {% endif %}
             {% comment %} {{ request.session.api__token }} {% endcomment %}

@@ -8,7 +8,6 @@ def index(request):
 
 def run_get_token(request):
     request.session['api__token'] = Call.get_token()
-    # return render(request, "index.html")
     return HttpResponseRedirect("/")
     
 def run_get_song_details(request):
@@ -27,26 +26,14 @@ def run_get_recommendation(request):
 
     return JsonResponse(result_recommendation)
 
-# def run_get_features(request):
-#     result = Call.get_features(track_id=request.POST.track_id, access_token=request.session['api__token'])
-#     print("TRY TO KIJIE....")
-#     return result
-
 def run_get_features(request):
-    track_id = request.POST.get('track_id')  # Use .get() method to access the track_id value
-    if track_id is None:
-        print("Missing track_id parameter")
-    
+    track_id = request.POST.get('track_id')
     access_token = request.session.get('api__token')
-    if access_token is None:
-        print("Missing access token in session")
-
+    print("*******************************************", track_id, " ", access_token)
     result = Call.get_features(track_id=track_id, access_token=access_token)
+    print(result)
     return JsonResponse(result)
-    # Process the result and return the appropriate response
 
-
-def end():
+def end(request):
     request.session.clear()
-    run_get_token()
     return render(request,"index.html")

@@ -32,7 +32,7 @@ class Call:
             token = json_result["access_token"]
             return token
         else:
-            return 0
+            return ".env not found"
 
     def get_song_details(song_name, access_token):
         search_url = "https://api.spotify.com/v1/search/"
@@ -69,7 +69,7 @@ class Call:
             print(audio_features)
             return audio_features
         else:
-            print("NOOOOOOOO")
+            print(response)
 
     def get_recommendation(limit, seed_track, seed_artist, token):
         Recommendation_EndPoint = 'https://api.spotify.com/v1/recommendations/'
