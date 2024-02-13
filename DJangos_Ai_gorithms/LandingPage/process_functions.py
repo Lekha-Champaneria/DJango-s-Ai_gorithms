@@ -88,3 +88,13 @@ class Call:
             return Recommendation_list
         else:
             return result.status_code
+
+    def get_top10(targetFeatures, target_track, _100Features, _100Tracks):
+        print(f'''\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+            {targetFeatures}****************************\n
+            {target_track}***************************\n
+            {_100Features}***************************\n
+            {_100Tracks}
+            \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+            ''')
+        return {'msg':'hi'}

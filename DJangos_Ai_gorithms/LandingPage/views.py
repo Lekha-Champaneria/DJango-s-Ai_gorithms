@@ -34,6 +34,19 @@ def run_get_features(request):
     print(result)
     return JsonResponse(result)
 
+def run_get_top10(request):
+    Target_track = request.POST.get('_target_track')
+    Target_track_features = request.POST.get('_target_features')
+    _100Tracks = request.POST.get('_100tracks')
+    _100Features = request.POST.get('_100features')
+    response = Call.get_top10(
+        targetFeatures=Target_track_features,
+        target_track=Target_track,
+        _100Features=_100Features,
+        _100Tracks=_100Tracks
+    )
+    return JsonResponse(response)
+
 def end(request):
     request.session.clear()
     return render(request,"index.html")
