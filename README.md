@@ -10,10 +10,6 @@
 - **Interactive UI**: An intuitive web interface built with Django and Bootstrap for easy navigation.
 - **AI-Powered Recommendations**: The system processes track features and employs algorithms to enhance track suggestions dynamically.
 
-## Demo
-
-![Demo Screenshot](#) *(Replace this with a screenshot or GIF of your app in action)*
-
 ## Installation
 
 ### Prerequisites
